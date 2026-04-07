@@ -20,28 +20,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   /* ================= COUNTDOWN ================= */
-  const target = new Date("April 9, 2026 00:00:00").getTime();
-
-  const timer = setInterval(() => {
-    const now = Date.now();
-    const gap = target - now;
-
-    if (gap <= 0) {
-      document.getElementById("countdown").innerText =
-        "Do you wanna see what I made? 🎁";
-      document.getElementById("choiceButtons").style.display = "block";
-      clearInterval(timer);
-    } else {
-      const d = Math.floor(gap / (1000 * 60 * 60 * 24));
-      const h = Math.floor((gap / (1000 * 60 * 60)) % 24);
-      const m = Math.floor((gap / (1000 * 60)) % 60);
-      const s = Math.floor((gap / 1000) % 60);
-
-      document.getElementById("countdown").innerText =
-        `${d}d ${h}h ${m}m ${s}s`;
-    }
-  }, 1000);
-
+   
 
   /* ================= BUTTONS ================= */
   const noBtn = document.getElementById("noBtn");
