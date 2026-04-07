@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>For Someone Special 💖</title>
+<link rel="stylesheet" href="style.css">
+
+<style>
+/* Smooth transitions */
+.section {
+  display: none;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.5s ease;
+}
+
+.section.active {
+  display: block;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Balloon animation */
+.balloon {
+  font-size: 45px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.balloon.pop {
+  transform: scale(1.5);
+  opacity: 0;
+}
+
+/* Cake glow */
+#cake {
+  font-size: 70px;
+  cursor: pointer;
+  transition: 0.3s;
+  animation: glow 1.5s infinite alternate;
+}
+
+@keyframes glow {
+  from { filter: drop-shadow(0 0 5px #ff4d6d); }
+  to { filter: drop-shadow(0 0 20px #ff4d6d); }
+}
+
+/* Final glow */
+body.final-mode {
+  background: radial-gradient(circle, #2b1055, #1a082d);
+}
+
+#finalMsg {
+  font-size: 14px;
+  line-height: 1.6;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="hearts-container"></div>
+
+<div class="container">
+
+  <!-- ⏳ COUNTDOWN -->
+  <div id="countdownSection" class="section active">
+    <h1 id="mainTitle"></h1>
+    <h3 id="subTitle"></h3>
+    <h4 id="countdown"></h4>
+    <!-- <h1>It's Your Special Day Lil Demon👻</h1>
+    <h3>I wanted to make something special for you, because you are special to me!</h3>
+    <h4 id="countdown"></h4> -->
+
+    <div class="buttons" id="choiceButtons" style="display:none;">
+      <button id="yesBtn">Yes 💖</button>
+      <button id="noBtn">No 😶</button>
+    </div>
+  </div>
+
+  <!-- 🎂 BIRTHDAY -->
+  <div id="birthdaySection" class="section">
+    <h1>Happppiest Birthday Billi😸🎂</h1>
+    <p>
+      You are not just my best friend,<br>
+      you are my comfort, my happiness,<br>
+      and my favorite person 💖
+    </p>
+
+    <div class="cake">🎂</div>
+
+    <button onclick="show('balloonSection')">Next 🎈</button>
+  </div>
+
+  <!-- 🎈 BALLOONS -->
+  <div id="balloonSection" class="section">
+    <h1>Baghtes kay Pop the balloons Manjar🐾</h1>
+
+    <div class="balloons">
+      <div class="balloon">🎈</div>
+      <div class="balloon">🎈</div>
+      <div class="balloon">🎈</div>
+    </div>
+
+    <p id="balloonMsg"></p>
+
+    <button id="balloonNext" style="display:none;" onclick="playClick(); show('photoSection')">
+      Chalo next ➡
+    </button>
+  </div>
+
+  <!-- 📸 PHOTOS -->
+   <div id="photoSection" class="section">
+  <h1>Billa & Billi Memories 📸</h1>
+
+  <div class="slideshow">
+    <img id="slideImg" src="assets/closeyes.jpeg">
+  </div>
+
+  <p>I didn’t plan these moments but I’m really glad they happened with you ❤️</p>
+
+  <button onclick="playClick(); show('complimentSection')">Chalo next ➡ </button>
+</div>
+
+   
+   
+
+<!-- compliment section -->
+ <div id="complimentSection" class="section">
+  <h1>A little something for you 💖</h1>
+
+  <div id="tapIcon">💌</div>
+
+  <p id="complimentText">Tap kr letter to get cute kawai message just like you 🙃</p>
+
+  <button id="complimentNext" style="display:none;" onclick="playClick(); show('finalSection')">
+  Chalo next ➡
+  </button>
+</div>
+
+  <!-- 🎂 CAKE -->
+  <div id="cakeSection" class="section">
+    <h1>Manjar Make a wish 🎂</h1>
+    <div id="cake">🎂🕯️</div>
+    <p>Hint: Click the candle</p>
+  </div>
+
+  <!-- 💖 FINAL -->
+  <!-- <div id="finalSection" class="section">
+    <h1>💖</h1>
+    <p id="finalMsg"></p>
+  </div> -->
+  <!-- 💖 FINAL -->
+<div id="finalSection" class="section finalScene">
+
+  <!-- 🎈 Balloons -->
+  <div class="balloonContainer"></div>
+
+  <!-- 🎭 Curtains -->
+  <div class="curtain left"></div>
+  <div class="curtain right"></div>
+
+  <!-- 💖 Final Content -->
+  <div class="finalContent">
+  <div class="finalBox">
+    <h1>Happiest Birthday Billi</h1>
+    <p id="finalMsg"></p>
+  </div>
+</div>
+
+</div>
+</div>
+<audio id="popSound" src="assets/freesound_community-balloon-pop-48030.mp3"></audio>
+<audio id="bgMusic" src="assets/music.mp3"></audio>
+<audio id="clickSound" src="assets/chalo.mp3"></audio>
+<audio id="tapSound" src="assets/meow_jEHtSyd.mp3"></audio>
+<audio id="photoMusic" src="assets/songs.mp3" loop></audio>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+  const target = new Date("April 9, 2026 00:00:00").getTime();
+
+  const title = document.getElementById("mainTitle");
+  const subtitle = document.getElementById("subTitle");
+
+  const timer = setInterval(() => {
+    const now = Date.now();
+    const gap = target - now;
+
+    if (gap <= 0) {
+      title.innerText = "It's Your Special Day Lil Demon👻";
+      subtitle.innerText = "I wanted to make something special for you, because you are special to me!";
+
+      document.getElementById("countdown").innerText =
+        "Do you wanna see what I made? 🎁";
+
+      document.getElementById("choiceButtons").style.display = "block";
+
+      clearInterval(timer);
+
+    } else {
+      title.innerText = "Something special is coming...";
+      subtitle.innerText = "Wait for it 😏💖";
+
+      const d = Math.floor(gap / (1000 * 60 * 60 * 24));
+      const h = Math.floor((gap / (1000 * 60 * 60)) % 24);
+      const m = Math.floor((gap / (1000 * 60)) % 60);
+      const s = Math.floor((gap / 1000) % 60);
+
+      document.getElementById("countdown").innerText =
+        `${d}d ${h}h ${m}m ${s}s`;
+    }
+  }, 1000);
+
+});
+</script>
+<script src="script.js"></script>
+</body>
+</html>
